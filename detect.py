@@ -21,7 +21,7 @@ def detect(save_img=False):
     out, source, weights, view_img, save_txt, imgsz = \
         opt.save_dir, opt.source, opt.weights, opt.view_img, opt.save_txt, opt.img_size
     webcam = source.isnumeric() or source.startswith(('rtsp://', 'rtmp://', 'http://')) or source.endswith('.txt')
-
+    
     # Initialize
     set_logging()
     device = select_device(opt.device)
@@ -52,7 +52,7 @@ def detect(save_img=False):
     else:
         save_img = True
         dataset = LoadImages(source, img_size=imgsz)
-
+    array = {}
     # Get names and colors
     names = model.module.names if hasattr(model, 'module') else model.names
     colors = [[random.randint(0, 255) for _ in range(3)] for _ in range(len(names))]
@@ -80,7 +80,7 @@ def detect(save_img=False):
         if classify:
             pred = apply_classifier(pred, modelc, img, im0s)
             
-        array = {}
+      
         # Process detections
         for i, det in enumerate(pred):  # detections per image
             if webcam:  # batch_size >= 1
