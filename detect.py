@@ -99,7 +99,7 @@ def detect(save_img=False):
                 for c in det[:, -1].unique():
                     n = (det[:, -1] == c).sum()  # detections per class
                     s += '%g %ss, ' % (n, names[int(c)])  # add to string
-
+            array = {}
                 # Write results
                 for *xyxy, conf, cls in reversed(det):
                     if save_txt:  # Write to file
@@ -110,6 +110,7 @@ def detect(save_img=False):
 
                     if save_img or view_img:  # Add bbox to image
                         label = '%s %.2f' % (names[int(cls)], conf)
+                        array[label] += 1 
                         plot_one_box(xyxy, im0, label=label, color=colors[int(cls)], line_thickness=3)
 
             # Print time (inference + NMS)
@@ -142,6 +143,7 @@ def detect(save_img=False):
         print('Results saved to %s' % Path(out))
 
     print('Done. (%.3fs)' % (time.time() - t0))
+    print(array)
 
 
 if __name__ == '__main__':
